@@ -1,0 +1,16 @@
+git init  --- creates git file
+
+git remote add origin --- links the project to git
+
+
+----
+
+git pull origin master --- 
+
+git add .
+
+git commit 
+
+git push origin master  --- Uploads all changes to master
+
+----

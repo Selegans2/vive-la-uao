@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "283854304131",
+    "firebase_url": "https://charmander-d429e.firebaseio.com",
+    "project_id": "charmander-d429e",
+    "storage_bucket": "charmander-d429e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:283854304131:android:74b9e68b57b56a88",
+        "android_client_info": {
+          "package_name": "com.uao.campus.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "283854304131-il0t2chr9um8rmi0uct7dita3sjtue4a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCGroOAfZouhcNxySBZ9eP7NXVUcuoF1do"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "283854304131-il0t2chr9um8rmi0uct7dita3sjtue4a.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "283854304131-rdlsske481o9pjooe7nt8i1ho1jpppci.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.uao.campus.ios"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
