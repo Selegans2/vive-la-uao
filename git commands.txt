@@ -1,6 +1,6 @@
 git init  --- creates git file
 
-git remote add origin --- links the project to git
+git remote add origin https://github.com/blobquiet/vive-la-uao --- links the project to git
 
 
 ----
@@ -12,5 +12,9 @@ git add .
 git commit 
 
 git push origin master  --- Uploads all changes to master
+
+git branch
+
+git checkout branch1
 
 ----

@@ -10,9 +10,8 @@ using UnityEngine.Assertions;
 using UnityEngine.UI;
 using System.Threading.Tasks;
 
-public class GetQA : MonoBehaviour
+public class TestQuiz : MonoBehaviour
 {
-
     private FirebaseAuth auth;
     private DatabaseReference reference;
     private List<QAStructure> QAList = new List<QAStructure>();
@@ -77,22 +76,21 @@ public class GetQA : MonoBehaviour
     void Update()
     {
         Debug.Log(QAList.Count);
-        if (Spinner.activeSelf==false)
+        if (Spinner.activeSelf == false)
         {
             if (timer < 0)
             {
                 efxSource.Stop();
-                ValidateQuestion();
+                //ValidateQuestion();
             }
-            AsignText();
+            //AsignText();
         }
-
     }
 
     //Method to retrieve the timer of each question from Firebase
     private IEnumerator SetUpTriviaQATimer()
     {
-        yield return new YieldTask(reference.Child("Challenge").Child("Yincana").Child(TapPin.StationTapped.key).GetValueAsync().ContinueWith(task =>
+        yield return new YieldTask(reference.Child("Challenge").Child("Yincana").Child("station0").GetValueAsync().ContinueWith(task =>
        {
            if (task.IsFaulted)
            {
@@ -103,15 +101,17 @@ public class GetQA : MonoBehaviour
            {
                DataSnapshot snapshot = task.Result;
                timerFirebase = float.Parse(snapshot.Child("timer").Value.ToString());
+               Debug.Log("timerFirebase" + timerFirebase);
                timer = timerFirebase;
                questionsAllowed = int.Parse(snapshot.Child("numQA").Value.ToString());
+               Debug.Log("questionsAllowed" + questionsAllowed);
            }
        }));
     }
 
     private IEnumerator GetQAData()
     {
-        yield return new YieldTask(reference.Child("Challenge").Child("Yincana").Child(TapPin.StationTapped.key).Child("trivia").Child("QA").GetValueAsync().ContinueWith(task =>
+        yield return new YieldTask(reference.Child("Challenge").Child("Yincana").Child("station0").Child("trivia").GetValueAsync().ContinueWith(task =>
         {
             if (task.IsFaulted)
             {
@@ -121,7 +121,7 @@ public class GetQA : MonoBehaviour
             else if (task.IsCompleted)
             {
                 DataSnapshot snapshot = task.Result;
-                foreach (DataSnapshot QA in snapshot.Children) //QA
+                foreach (DataSnapshot QA in snapshot.Child("QA").Children) //QA
                 {
                     List<string> answersList = new List<string>();
                     foreach (DataSnapshot node in QA.Children) //nodes 
@@ -259,8 +259,8 @@ public class GetQA : MonoBehaviour
         //ScoreCanvas.SetActive(false);
         if (PlayerPrefs.GetString("Yincana").Length != 0)
         {
-            await reference.Child("Groups").Child(PlayerPrefs.GetString("Yincana")).Child("groups").Child(PlayerPrefs.GetString("Group")).Child("stations score").Child(TapPin.StationTapped.key).SetValueAsync(stationScore);
-            GetPins.getStationsYincana = true;
+            await reference.Child("Groups").Child("pruebita").Child("groups").Child("group 0").Child("stations score").Child("group 0").SetValueAsync("1000");
+            //GetPins.getStationsYincana = true;
             UnityEngine.SceneManagement.SceneManager.LoadScene("Main Scene");
         }
         UnityEngine.SceneManagement.SceneManager.LoadScene("Main Scene");
