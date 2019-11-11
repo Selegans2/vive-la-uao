@@ -28,6 +28,7 @@ public class DesktopCamera : MonoBehaviour
     private Vector3 position;
     void Start() { Init(); }
     void OnEnable() { Init(); }
+    RaycastHit hit;
     public void Init()
     {
         //If there is no target, create a temporary target at 'distance' from the cameras current viewpoint
@@ -88,11 +89,13 @@ public class DesktopCamera : MonoBehaviour
             rotation = Quaternion.Lerp(currentRotation, desiredRotation, Time.deltaTime * zoomDampening);
             transform.rotation = rotation;
         }
+
         // otherwise if middle mouse is selected, we pan by way of transforming the target in screenspace
         if (Input.GetMouseButtonDown(0))
         {
             touchStart = GetWorldPosition(groundZ);
         }
+        //&& hitColliderName == "Campus UAO"
         // otherwise if middle mouse is selected, we pan by way of transforming the target in screenspace
         if (Input.GetMouseButton(0))
         {
@@ -129,13 +132,24 @@ public class DesktopCamera : MonoBehaviour
             angle -= 360;
         return Mathf.Clamp(angle, min, max);
     }
-
+    string hitColliderName;
     private Vector3 GetWorldPosition(float z)
     {
         Ray mousePos = Camera.main.ScreenPointToRay(Input.mousePosition);
         Plane ground = new Plane(Vector3.down, new Vector3(0, 0, z));
         float distance;
         ground.Raycast(mousePos, out distance);
+        /*
+        if (Physics.Raycast(mousePos, out hit))
+        {
+            hitColliderName = hit.collider.name;
+             Debug.Log(hitColliderName);
+        }
+        else
+        {
+            hitColliderName = null;
+        }*/
         return mousePos.GetPoint(distance);
+
     }
 }

@@ -34,7 +34,7 @@ public class TestQuiz : MonoBehaviour
 
     public GameObject Spinner;
     bool questionAsked = false;
-    int questionsAllowed = 1;
+    int questionsAllowed = 0;
     bool getText = false;
     bool triviaDone = false;
     private float playEverySeconds = 1;
@@ -45,6 +45,8 @@ public class TestQuiz : MonoBehaviour
     int totalScore;
     int score = 0;
     string pickedAnswer;
+
+    private int numValidations = 1;
     // Start is called before the first frame update
     IEnumerator Start()
     {
@@ -67,7 +69,7 @@ public class TestQuiz : MonoBehaviour
         });
         Spinner.SetActive(true);
         efxSource = GetComponent<AudioSource>();
-        //yield return StartCoroutine(GetTriviaFirebaseTimer());
+        efxSource.Stop();
         yield return StartCoroutine(SetUpTriviaQATimer());
         yield return StartCoroutine(GetQAData());
     }
@@ -75,22 +77,21 @@ public class TestQuiz : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(QAList.Count);
         if (Spinner.activeSelf == false)
         {
             if (timer < 0)
             {
                 efxSource.Stop();
-                //ValidateQuestion();
+                ValidateQuestion();
             }
-            //AsignText();
+            AsignText();
         }
     }
 
     //Method to retrieve the timer of each question from Firebase
     private IEnumerator SetUpTriviaQATimer()
     {
-        yield return new YieldTask(reference.Child("Challenge").Child("Yincana").Child("station0").GetValueAsync().ContinueWith(task =>
+        yield return new YieldTask(reference.Child("Challenge").Child("Yincana").Child("station0").Child("trivia").GetValueAsync().ContinueWith(task =>
        {
            if (task.IsFaulted)
            {
@@ -101,10 +102,8 @@ public class TestQuiz : MonoBehaviour
            {
                DataSnapshot snapshot = task.Result;
                timerFirebase = float.Parse(snapshot.Child("timer").Value.ToString());
-               Debug.Log("timerFirebase" + timerFirebase);
                timer = timerFirebase;
                questionsAllowed = int.Parse(snapshot.Child("numQA").Value.ToString());
-               Debug.Log("questionsAllowed" + questionsAllowed);
            }
        }));
     }
@@ -146,11 +145,29 @@ public class TestQuiz : MonoBehaviour
             }
         }));
         yield return null;
+        //Debug.Log(QAList.Count);
+        //Debug.Log(QAList[0].question);
+        //Debug.Log(QAList[0].correct);
         Spinner.SetActive(false);
     }
-
     public void AsignText()
     {
+        //Condition to finish the trivia
+        if (numValidations > questionsAllowed)
+        {
+            Debug.Log("I'm attempting to finish the trivia");
+            if (triviaDone == false)
+            {
+                stationScore = score;
+                totalScore = PlayerPrefs.GetInt("Total Score") + stationScore;
+                PlayerPrefs.SetInt("Total Score", totalScore);
+            }
+            triviaDone = true;
+            ScoreCanvas.SetActive(true);
+            finalScorePrefab.GetComponent<Text>().text = score.ToString();
+            return;
+        }
+
         timer -= Time.deltaTime;
         int timerInt = (int)timer;
         timePassed += Time.deltaTime;
@@ -165,17 +182,18 @@ public class TestQuiz : MonoBehaviour
         //
         timerText.text = "" + timerInt.ToString();
 
-        if (getText == true && questionsAskedList.Count <= questionsAllowed)
+        if (getText == true && questionsAskedList.Count < questionsAllowed)
         {
+            //Check if the question has been asked
             int randomNumber = Random.Range(0, QAList.Count);
             if (questionsAskedList.Count > 0)
             {
-                for (int i = 0; i <= questionsAskedList.Count - 1; i++)
+                for (int i = 0; i < questionsAskedList.Count; i++)
                 {
                     if (randomNumber == questionsAskedList[i])
                     {
                         questionAsked = true;
-                        return;
+                        break;
                     }
                     else
                     {
@@ -184,6 +202,7 @@ public class TestQuiz : MonoBehaviour
 
                 }
             }
+            //If the current is not asked, Asked it!
             if (!questionAsked)
             {
                 foreach (string al in QAList[randomNumber].answersList)
@@ -196,26 +215,17 @@ public class TestQuiz : MonoBehaviour
                 question = QAList[randomNumber].question;
                 QuestionPrefab.GetComponent<Text>().text = question;
                 correct = QAList[randomNumber].correct;
+
+                //adding question to list of askeed questions
+                questionsAskedList.Add(randomNumber);
                 getText = false;
-            }
-            else
-            {
-                getText = true;
-            }
-            questionsAskedList.Add(randomNumber);
-            if (questionsAskedList.Count > questionsAllowed)
-            {
-                triviaDone = true;
-                stationScore = score;
-                totalScore = PlayerPrefs.GetInt("Total Score") + stationScore;
-                PlayerPrefs.SetInt("Total Score", totalScore);
-                ScoreCanvas.SetActive(true);
-                finalScorePrefab.GetComponent<Text>().text = score.ToString();
             }
         }
     }
     public void ValidateQuestion()
     {
+        numValidations++;
+        Debug.Log("pickedAnswer: " + pickedAnswer);
         timer = timerFirebase;
         timePassed = 0;
         CorrectCanvas.SetActive(false);

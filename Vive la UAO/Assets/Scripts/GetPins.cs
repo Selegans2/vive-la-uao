@@ -204,7 +204,6 @@ public class GetPins : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(stationList.Count);
         //If yincana is enabled
         if (DisableYincanaTimer == false && PlayerPrefs.GetString("Yincana").Length != 0)
         {
