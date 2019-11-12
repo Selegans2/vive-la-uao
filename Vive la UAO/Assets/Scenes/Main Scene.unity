@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.88755256, g: 0.90215516, b: 0.9201416, a: 1}
+  m_IndirectSpecularColor: {r: 0.88755083, g: 0.90215343, b: 0.920139, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1598,7 +1598,6 @@ MonoBehaviour:
   timerText: {fileID: 1508781740}
   timerObject: {fileID: 657547585}
   totalTime: 0
-  auxTimer: 3600
   isTimeLoaded: 0
   yincanaManager: {fileID: 1410449973}
 --- !u!1001 &429783094

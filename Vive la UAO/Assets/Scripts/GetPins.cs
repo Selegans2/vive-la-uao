@@ -58,9 +58,7 @@ public class GetPins : MonoBehaviour
     public GameObject RefreshButton;
     public GameObject ChatMessage;
 
-    [Space(5)]
-    [Header("Timer Yincana")]
-    //public GameObject TimerObject;
+
 
     [Space(5)]
     public Text testText;
@@ -86,6 +84,7 @@ public class GetPins : MonoBehaviour
     int participantsCount = 0;
     public bool DisableYincanaTimer = false;
     bool yincanaState;
+    public static float yincanaTimer=0;
 
     float timer = 0;
     public GameObject ParticipantName;
@@ -251,7 +250,8 @@ public class GetPins : MonoBehaviour
             {
                 Snapshot = task2.Result;
                 //Set Timer of yincana yincanatimer
-                //Timer.auxTimer = float.Parse(Snapshot.Child("Timer").Value.ToString());
+                yincanaTimer =  float.Parse(Snapshot.Child(storedYincanaKey).Child("Timer").Value.ToString());
+                Timer.Instance.auxTimer =yincanaTimer;
                 foreach (DataSnapshot st in Snapshot.Child(storedYincanaKey).Child("stations").Children) // stations of yincana
                 {
                     IDictionary yinStations = (IDictionary)(st.Value);
@@ -818,12 +818,12 @@ public class GetPins : MonoBehaviour
     //Activated by the end of the group registration
     public void StartYincana()
     {
+        PlayerPrefs.SetString("Yincana", yincanaName);
         StartCoroutine(SaveGroup());
     }
     //Reasures that they have finished adding participants
     public void ConfirmYincanaStart()
     {
-        PlayerPrefs.SetString("Yincana", yincanaName);
         YincanaConfirmationModal.SetActive(true);
     }
     public void HideConfirmationModal()

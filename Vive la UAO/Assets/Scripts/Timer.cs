@@ -6,6 +6,7 @@ using TMPro;
 
 public class Timer : MonoBehaviour
 {
+    public static Timer Instance;
     [Header("Time UI")]
     public TextMeshProUGUI timerText;
     public GameObject timerObject;
@@ -13,7 +14,8 @@ public class Timer : MonoBehaviour
     [Space(20)]
     [Header("Timer Attributes")]
     public float totalTime = 30f;
-    public float auxTimer;
+    public float auxTimer = 10;
+    private bool  temp = false;
 
     [Space(20)]
     public bool isTimeLoaded = false;
@@ -27,6 +29,7 @@ public class Timer : MonoBehaviour
         {
             GameManagerExists = true;
             DontDestroyOnLoad(this.gameObject);
+            Instance=this;
             //this.gameObject.name = ("Timer Canvas Instance");
 
         }
@@ -42,19 +45,23 @@ public class Timer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        Debug.Log(GetPins.yincanaTimer);
         checkPins();
 
         //If previous timer exist, start from the last time
-        if(PlayerPrefs.GetInt("Yincana Time") > 0 && !isTimeLoaded){
+        if (PlayerPrefs.GetInt("Yincana Time") > 0 && !isTimeLoaded)
+        {
 
             totalTime = (float)PlayerPrefs.GetInt("Yincana Time");
             isTimeLoaded = true;
         }
 
+
         //If there no Yincana, then asign auxTime to Totaltime
-        if (PlayerPrefs.GetString("Yincana").Length <= 0) {
+        if (GetPins.yincanaTimer!=0 && !temp)
+        {
             totalTime = auxTimer;
+            temp=true;
         }
 
 
@@ -129,3 +136,5 @@ public class Timer : MonoBehaviour
         timerObject.SetActive(false);
     }
 }
+
+
