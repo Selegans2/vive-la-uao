@@ -10,11 +10,13 @@ public class ToggleHandler : MonoBehaviour
     private ToggleGroup toggleGroup;
     private Toggle newToggle;
     GetQA getQADataScript;
+    //TestQuiz testQuizScript;
     // Start is called before the first frame update
     void Start()
     {
         getQAObject = GameObject.Find("Get QA Script");
         getQADataScript = getQAObject.GetComponent<GetQA>();
+        //testQuizScript = getQAObject.GetComponent<TestQuiz>();
 
         toggleGroup = GameObject.FindWithTag("toggleGroup").GetComponent<ToggleGroup>();
 
@@ -36,6 +38,8 @@ public class ToggleHandler : MonoBehaviour
     {
         string sendedAnswer = transform.parent.GetComponent<Text>().text;
         getQADataScript.ToggleHandler(sendedAnswer);
+        //Debug.Log(sendedAnswer);
+        //testQuizScript.ToggleHandler(sendedAnswer);
     }
 
 }

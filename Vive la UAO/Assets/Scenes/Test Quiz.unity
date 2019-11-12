@@ -322,6 +322,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 112381242}
+  - component: {fileID: 112381245}
   - component: {fileID: 112381243}
   - component: {fileID: 112381244}
   m_Layer: 0
@@ -352,7 +353,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 112381241}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 182855edcb78d4b42acbf00967b350a1, type: 3}
   m_Name: 
@@ -467,6 +468,32 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &112381245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 112381241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c6f2ee0042f8b24e83ab98b05d3ca6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  efxWrong: {fileID: 35345443}
+  efxCorrect: {fileID: 1666021006}
+  timerText: {fileID: 600806018}
+  answersPrefab: {fileID: 2138273092081125614, guid: 96281406e129a4942b325c81c30d2554,
+    type: 3}
+  answersBoxParent: {fileID: 600806016}
+  CorrectCanvas: {fileID: 600806011}
+  QuestionPrefab: {fileID: 600806015}
+  ScoreCanvas: {fileID: 600806017}
+  WrongCanvas: {fileID: 600806010}
+  Score: {fileID: 600806014}
+  finalScorePrefab: {fileID: 600806013}
+  cardParent: {fileID: 600806012}
+  Spinner: {fileID: 1751479387}
 --- !u!1 &429710225
 GameObject:
   m_ObjectHideFlags: 0
@@ -684,7 +711,12 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 112381243}
+      objectReference: {fileID: 112381245}
+    - target: {fileID: 8931869736154470583, guid: 5a6e03a5ce5751c4fad4ea6bb9002a1d,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ValidateQuestion
+      objectReference: {fileID: 0}
     - target: {fileID: 8931869736145676389, guid: 5a6e03a5ce5751c4fad4ea6bb9002a1d,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -700,7 +732,8 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0.00024414062
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 600806020, guid: 5a6e03a5ce5751c4fad4ea6bb9002a1d, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 5a6e03a5ce5751c4fad4ea6bb9002a1d, type: 3}
 --- !u!1 &600806010 stripped
 GameObject:

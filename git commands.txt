@@ -1,6 +1,6 @@
 git init  --- creates git file
 
-git remote add origin --- links the project to git
+git remote add origin https://github.com/blobquiet/vive-la-uao --- links the project to git
 
 
 ----
@@ -12,5 +12,45 @@ git add .
 git commit 
 
 git push origin master  --- Uploads all changes to master
+git push --set-upstream origin fixing-trivia
+
+git branch
+
+git checkout branch1
 
 ----
+
+git init --- creates a configuration file for git
+
+git clone https://github.com/blobquiet/vive-la-uao
+
+git remote add origin https://github.com/blobquiet/vive-la-uao --- links the project to git
+
+git pull origin master --- Gets the master changes before a push
+
+
+git branch miguelito  --creates a local miguelito branch
+
+git branch --- see all the branches
+
+git status --- see wich branch you are in
+ 
+git checkout miguelito --- Set to the miguelito branch to push changes
+
+
+git add . --- Add changes locally
+
+git commit -m "my push" --- add a commit locally
+
+git push --- push the changes
+
+
+
+
+
+
+
+
+
+
+

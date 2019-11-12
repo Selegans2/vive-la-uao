@@ -10,7 +10,7 @@ using UnityEngine.Assertions;
 using UnityEngine.UI;
 using System.Threading.Tasks;
 
-public class GetQA : MonoBehaviour
+public class TestQuiz : MonoBehaviour
 {
     private FirebaseAuth auth;
     private DatabaseReference reference;
