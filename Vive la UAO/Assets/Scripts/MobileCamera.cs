@@ -83,7 +83,7 @@ public class MobileCamera : MonoBehaviour
     float groundZ = 0;
     void LateUpdate()
     {
-        
+
         // If Control and Alt and Middle button? ZOOM!
         if (Input.touchCount == 2)
         {
@@ -121,19 +121,39 @@ public class MobileCamera : MonoBehaviour
         }
         if (Input.touchCount == 1 && (Input.GetTouch(0).phase == TouchPhase.Moved || Input.GetTouch(1).phase == TouchPhase.Moved || Input.GetTouch(2).phase == TouchPhase.Moved))
         {
-            //grab the rotation of the camera so we can move in a psuedo local XY space
-            target.rotation = transform.rotation;
-            Vector3 direction = touchStart - GetWorldPosition(groundZ);
-            target.transform.position += direction * panSpeed * 0.04f;
+            if (hitColliderName != null)
+            {
+                //grab the rotation of the camera so we can move in a psuedo local XY space
+                target.rotation = transform.rotation;
+                Vector3 direction = touchStart - GetWorldPosition(groundZ);
+                target.transform.position += direction * panSpeed * 0.04f;
 
-            Vector3 pos = target.transform.position;
-            pos.x = Mathf.Clamp(target.transform.position.x, BoundsX[0], BoundsX[1]);
-            pos.z = Mathf.Clamp(target.transform.position.z, BoundsZ[0], BoundsZ[1]);
-            target.transform.position = pos;
+                Vector3 pos = target.transform.position;
+                pos.x = Mathf.Clamp(target.transform.position.x, BoundsX[0], BoundsX[1]);
+                pos.z = Mathf.Clamp(target.transform.position.z, BoundsZ[0], BoundsZ[1]);
+                target.transform.position = pos;
+            }
+            else if (hitColliderName == null && flag)
+            {
+                //grab the rotation of the camera so we can move in a psuedo local XY space
+                target.rotation = transform.rotation;
+                Vector3 direction = touchStart - GetWorldPosition(groundZ);
+                target.transform.position += direction * panSpeed * 0.04f;
+
+                Vector3 pos = target.transform.position;
+                pos.x = Mathf.Clamp(target.transform.position.x, BoundsX[0], BoundsX[1]);
+                pos.z = Mathf.Clamp(target.transform.position.z, BoundsZ[0], BoundsZ[1]);
+                target.transform.position = pos;
+            }
+
+            else
+            {
+                flag = false;
+            }
         }
         desiredRotation = Quaternion.Euler(yDeg, xDeg, 0);
         currentRotation = transform.rotation;
-        rotation = Quaternion.Lerp(currentRotation, desiredRotation, Time.deltaTime * zoomDampening/2);
+        rotation = Quaternion.Lerp(currentRotation, desiredRotation, Time.deltaTime * zoomDampening / 2);
         transform.rotation = rotation;
 
         if (Input.GetMouseButtonDown(1))
@@ -141,20 +161,20 @@ public class MobileCamera : MonoBehaviour
             FirstPosition = Input.mousePosition;
             lastOffset = targetOffset;
         }
-/* 
-        if (Input.GetMouseButton(1))
-        {
-            SecondPosition = Input.mousePosition;
-            delta = SecondPosition - FirstPosition;
-            targetOffset = lastOffset + transform.right * delta.x * 0.003f + transform.up * delta.y * 0.003f;
+        /* 
+                if (Input.GetMouseButton(1))
+                {
+                    SecondPosition = Input.mousePosition;
+                    delta = SecondPosition - FirstPosition;
+                    targetOffset = lastOffset + transform.right * delta.x * 0.003f + transform.up * delta.y * 0.003f;
 
-        }
-*/
+                }
+        */
         ////////Orbit Position
 
         // affect the desired Zoom distance if we roll the scrollwheel
         desiredDistance = Mathf.Clamp(desiredDistance, minDistance, maxDistance);
-        currentDistance = Mathf.Lerp(currentDistance, desiredDistance * distanceFocus, Time.deltaTime * zoomDampening/2);
+        currentDistance = Mathf.Lerp(currentDistance, desiredDistance * distanceFocus, Time.deltaTime * zoomDampening / 2);
 
         position = target.position - (rotation * Vector3.forward * currentDistance);
 
@@ -171,12 +191,25 @@ public class MobileCamera : MonoBehaviour
             angle -= 360;
         return Mathf.Clamp(angle, min, max);
     }
+
+    string hitColliderName;
+    bool flag = false;
+    RaycastHit hit;
     private Vector3 GetWorldPosition(float z)
     {
         Ray mousePos = Camera.main.ScreenPointToRay(Input.mousePosition);
         Plane ground = new Plane(Vector3.down, new Vector3(0, 0, z));
         float distance;
         ground.Raycast(mousePos, out distance);
+        if (Physics.Raycast(mousePos, out hit))
+        {
+            hitColliderName = hit.collider.name;
+            //Debug.Log(hitColliderName);
+        }
+        else if (Physics.Raycast(mousePos, out hit) == false)
+        {
+            hitColliderName = null;
+        }
         return mousePos.GetPoint(distance);
     }
 }

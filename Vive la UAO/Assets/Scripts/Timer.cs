@@ -45,7 +45,6 @@ public class Timer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(GetPins.yincanaTimer);
         checkPins();
 
         //If previous timer exist, start from the last time

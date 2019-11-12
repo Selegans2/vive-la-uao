@@ -67,9 +67,10 @@ public class DesktopCamera : MonoBehaviour
     [Header("Camera Zoom")]
     public float distanceFocus = 1;
     public float curDistance;
-
+    Vector3 direction;
     void LateUpdate()
     {
+        Debug.Log(hitColliderName);
         // If Control and Alt and Middle button? ZOOM!
         if (Input.GetMouseButton(2))
         {
@@ -97,10 +98,10 @@ public class DesktopCamera : MonoBehaviour
         }
         //&& hitColliderName == "Campus UAO"
         // otherwise if middle mouse is selected, we pan by way of transforming the target in screenspace
-        if (Input.GetMouseButton(0))
+        /* if (Input.GetMouseButton(0) && hitColliderName != null)
         {
             target.rotation = transform.rotation;
-            Vector3 direction = touchStart - GetWorldPosition(groundZ);
+            direction = touchStart - GetWorldPosition(groundZ);
             target.transform.position += direction * panSpeed * 0.5f;
 
             // Ensure the camera remains within bounds.
@@ -108,6 +109,38 @@ public class DesktopCamera : MonoBehaviour
             pos.x = Mathf.Clamp(target.transform.position.x, BoundsX[0], BoundsX[1]);
             pos.z = Mathf.Clamp(target.transform.position.z, BoundsZ[0], BoundsZ[1]);
             target.transform.position = pos;
+        } */
+        if (Input.GetMouseButton(0))
+        {
+            if (hitColliderName != null)
+            {
+                target.rotation = transform.rotation;
+                direction = touchStart - GetWorldPosition(groundZ);
+                target.transform.position += direction * panSpeed * 0.5f;
+
+                // Ensure the camera remains within bounds.
+                Vector3 pos = target.transform.position;
+                pos.x = Mathf.Clamp(target.transform.position.x, BoundsX[0], BoundsX[1]);
+                pos.z = Mathf.Clamp(target.transform.position.z, BoundsZ[0], BoundsZ[1]);
+                target.transform.position = pos;
+                flag = true;
+            }
+            else if (hitColliderName == null && flag)
+            {
+                target.rotation = transform.rotation;
+                direction = touchStart - GetWorldPosition(groundZ);
+                target.transform.position += direction * panSpeed * 0.5f;
+
+                // Ensure the camera remains within bounds.
+                Vector3 pos = target.transform.position;
+                pos.x = Mathf.Clamp(target.transform.position.x, BoundsX[0], BoundsX[1]);
+                pos.z = Mathf.Clamp(target.transform.position.z, BoundsZ[0], BoundsZ[1]);
+                target.transform.position = pos;
+            }
+        }
+        else
+        {
+            flag = false;
         }
         ////////Orbit Position
         // affect the desired Zoom distance if we roll the scrollwheel
@@ -133,22 +166,23 @@ public class DesktopCamera : MonoBehaviour
         return Mathf.Clamp(angle, min, max);
     }
     string hitColliderName;
+    bool flag = false;
     private Vector3 GetWorldPosition(float z)
     {
         Ray mousePos = Camera.main.ScreenPointToRay(Input.mousePosition);
         Plane ground = new Plane(Vector3.down, new Vector3(0, 0, z));
         float distance;
         ground.Raycast(mousePos, out distance);
-        /*
+
         if (Physics.Raycast(mousePos, out hit))
         {
             hitColliderName = hit.collider.name;
-             Debug.Log(hitColliderName);
+            //Debug.Log(hitColliderName);
         }
-        else
+        else if (Physics.Raycast(mousePos, out hit) == false)
         {
             hitColliderName = null;
-        }*/
+        }
         return mousePos.GetPoint(distance);
 
     }
