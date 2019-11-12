@@ -16,6 +16,8 @@ using Firebase.Unity.Editor;
 
 using UnityEngine.Assertions;
 
+using TMPro;
+
 public class GetStationDataSave : MonoBehaviour
 {
     MeshRenderer meshRender;
@@ -81,11 +83,11 @@ public class GetStationDataSave : MonoBehaviour
                 //Gets the texture previously retrieved to be used right away
                 savedTexture = (Texture)picturesDictionary[TapPin.StationTapped.name];
                 //Set the name
-                var title = Title.GetComponent<Text>();
+                var title = Title.GetComponent<TextMeshProUGUI>();
                 sNameTapped = TapPin.StationTapped.name;
                 title.text = sNameTapped;
                 //Set the description
-                var description = Description.GetComponent<Text>();
+                var description = Description.GetComponent<TextMeshProUGUI>();
                 sDescriptionTapped = TapPin.StationTapped.description;
                 description.text = sDescriptionTapped;
                 //Set the texture
@@ -149,11 +151,11 @@ public class GetStationDataSave : MonoBehaviour
             else
             {
                 //Set the name
-                var title = Title.GetComponent<Text>();
+                var title = Title.GetComponent<TextMeshProUGUI>();
                 sNameTapped = TapPin.StationTapped.name;
                 title.text = sNameTapped;
                 //Set the description
-                var description = Description.GetComponent<Text>();
+                var description = Description.GetComponent<TextMeshProUGUI>();
                 sDescriptionTapped = TapPin.StationTapped.description;
                 description.text = sDescriptionTapped;
                 //Set the texture

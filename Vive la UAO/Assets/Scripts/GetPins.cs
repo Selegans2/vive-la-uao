@@ -260,7 +260,7 @@ public class GetPins : MonoBehaviour
                     string imageUrl = yinStations["imageUrl"].ToString();
                     string videoUrl = yinStations["videoUrl"].ToString();
                     string stationName = yinStations["name"].ToString();
-                    float x = float.Parse(yinStations["x"].ToString(), CultureInfo.InvariantCulture);
+                    float x = float.Parse(yinStations["x"].ToString(), CultureInfo.InvariantCulture) - 32;
                     //float x = float.Parse(station["x"].ToString(),CultureInfo.GetCultureInfo("de-DE").NumberFormat);
                     float y = float.Parse(yinStations["y"].ToString(), CultureInfo.InvariantCulture);
                     float z = float.Parse(yinStations["z"].ToString(), CultureInfo.InvariantCulture);

@@ -14,6 +14,7 @@ using Firebase.Extensions;
 using Firebase.Unity.Editor;
 
 
+using TMPro;
 using UnityEngine.Assertions;
 
 public class GetStationData : MonoBehaviour
@@ -109,11 +110,11 @@ public class GetStationData : MonoBehaviour
             else
             {
                 //Set the name
-                var title = Title.GetComponent<Text>();
+                var title = Title.GetComponent<TextMeshProUGUI>();
                 sNameTapped = TapPin.StationTapped.name;
                 title.text = sNameTapped;
                 //Set the description
-                var description = Description.GetComponent<Text>();
+                var description = Description.GetComponent<TextMeshProUGUI>();
                 sDescriptionTapped = TapPin.StationTapped.description;
                 description.text = sDescriptionTapped;
                 //Set the texture

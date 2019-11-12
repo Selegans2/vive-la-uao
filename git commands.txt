@@ -45,6 +45,11 @@ git commit -m "my push" --- add a commit locally
 git push --- push the changes
 
 
+git push origin --delete fixing-timer
+
+git branch -D fixing-timer
+
+
 
 
 
