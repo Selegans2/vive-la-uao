@@ -15,7 +15,7 @@ public class Timer : MonoBehaviour
     [Header("Timer Attributes")]
     public float totalTime = 30f;
     public float auxTimer = 10;
-    private bool  temp = false;
+    public static bool  temp = false;
 
     [Space(20)]
     public bool isTimeLoaded = false;

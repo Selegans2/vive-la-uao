@@ -84,7 +84,7 @@ public class GetPins : MonoBehaviour
     int participantsCount = 0;
     public bool DisableYincanaTimer = false;
     bool yincanaState;
-    public static float yincanaTimer=0;
+    public static float yincanaTimer = 0;
     bool yincanaStart = false;
 
     float timer = 0;
@@ -203,7 +203,7 @@ public class GetPins : MonoBehaviour
 
     void Update()
     {
-        Debug.Log("sequence: "+ sequence);
+        Debug.Log("sequence: " + sequence);
         //If yincana is enabled
         if (DisableYincanaTimer == false && PlayerPrefs.GetString("Yincana").Length != 0)
         {
@@ -218,6 +218,7 @@ public class GetPins : MonoBehaviour
 
     public void endYincana()
     {
+        Timer.temp = false;
         StartCoroutine(SetFinalScore());
         YincanaFinishedCanvas.SetActive(true);
         yincanaState = false;
@@ -251,8 +252,8 @@ public class GetPins : MonoBehaviour
             {
                 Snapshot = task2.Result;
                 //Set Timer of yincana yincanatimer
-                yincanaTimer =  float.Parse(Snapshot.Child(storedYincanaKey).Child("Timer").Value.ToString());
-                Timer.Instance.auxTimer =yincanaTimer;
+                yincanaTimer = float.Parse(Snapshot.Child(storedYincanaKey).Child("Timer").Value.ToString());
+                Timer.Instance.auxTimer = yincanaTimer;
                 foreach (DataSnapshot st in Snapshot.Child(storedYincanaKey).Child("stations").Children) // stations of yincana
                 {
                     IDictionary yinStations = (IDictionary)(st.Value);
@@ -502,7 +503,7 @@ public class GetPins : MonoBehaviour
                         //Get the first station to start
                         if (stationList[0].key == st.key)
                         {
-                            PlayerPrefs.SetInt("Total Score",0);
+                            PlayerPrefs.SetInt("Total Score", 0);
                             stationAnimated.Play("selectedStation");
                             //StartCoroutine(AnimateSelectedStation(stationAnimated));
                             temp.transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
@@ -722,6 +723,7 @@ public class GetPins : MonoBehaviour
         stationList.Clear();
         participantsNameList.Clear();
         isOnYincana = false;
+        Timer.temp = false;
 
         //if there was a yincana, disable it 
         StartCoroutine(DisableYincana());
