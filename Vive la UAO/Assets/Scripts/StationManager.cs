@@ -49,10 +49,8 @@ public class StationManager : MonoBehaviour
 
     public void closeCameraStation()
     {
+        StopAllCoroutines();
         isTargetFocus = true;
-
-        stationButton.SetActive(false);
-        targetButton.SetActive(true);
 
         if (pinsManager.currentPlace == AreasManager.currentArea.ToString())
         {
@@ -69,22 +67,22 @@ public class StationManager : MonoBehaviour
 
         //disablePin();
         float elapsed = 0.0f;
-        float duration = 2.2f;
+        float duration = 1.2f;
 
-        buttonsContainer.SetActive(false);
         //Changue smooth the Zoom of the camera
         Camera.main.GetComponent<DesktopCamera>().maxDistance = 28;
         Camera.main.GetComponent<MobileCamera>().maxDistance = 28;
+        targetButton.GetComponent<Button>().interactable = false;
 
         Vector3 finalPos = Vector3.zero;
         switch (pinsManager.currentPlace)
         {
             case "0":
-                finalPos = new Vector3(pinsManager.currentPin.transform.position.x, pinsManager.currentPin.transform.position.y * 3.2f, pinsManager.currentPin.transform.position.z);
+                finalPos = new Vector3(pinsManager.currentPin.transform.position.x, 0, pinsManager.currentPin.transform.position.z);
                 break;
 
             default:
-                finalPos = new Vector3(pinsManager.currentPin.transform.position.x, pinsManager.currentPin.transform.position.y * 1.5f, pinsManager.currentPin.transform.position.z);
+                finalPos = new Vector3(pinsManager.currentPin.transform.position.x, 0, pinsManager.currentPin.transform.position.z);
                 break;
         }
        
@@ -96,7 +94,7 @@ public class StationManager : MonoBehaviour
             yield return null;
         }
 
-        buttonsContainer.SetActive(true);
+        targetButton.GetComponent<Button>().interactable = true;
         target.transform.position = finalPos;
         Camera.main.GetComponent<DesktopCamera>().maxDistance = 130;
         Camera.main.GetComponent<MobileCamera>().maxDistance = 130;
@@ -109,26 +107,26 @@ public class StationManager : MonoBehaviour
 
         //disablePin();
         float elapsed = 0.0f;
-        float duration = 2.2f;
+        float duration = 1.2f;
 
-        buttonsContainer.SetActive(false);
         areasManager.changueSector(int.Parse(pinsManager.currentPlace));
         yield return new WaitForSeconds(4);
 
         //Changue smooth the Zoom of the camera
         Camera.main.GetComponent<DesktopCamera>().maxDistance = 28;
         Camera.main.GetComponent<MobileCamera>().maxDistance = 28;
+        targetButton.GetComponent<Button>().interactable = false;
 
 
         Vector3 finalPos = Vector3.zero;
         switch (pinsManager.currentPlace)
         {
             case "0":
-                finalPos = new Vector3(pinsManager.currentPin.transform.position.x, pinsManager.currentPin.transform.position.y * 3.2f, pinsManager.currentPin.transform.position.z);
+                finalPos = new Vector3(pinsManager.currentPin.transform.position.x, 0, pinsManager.currentPin.transform.position.z);
                 break;
 
             default:
-                finalPos = new Vector3(pinsManager.currentPin.transform.position.x, pinsManager.currentPin.transform.position.y * 1.5f, pinsManager.currentPin.transform.position.z);
+                finalPos = new Vector3(pinsManager.currentPin.transform.position.x, 0, pinsManager.currentPin.transform.position.z);
                 break;
         }
 
@@ -139,7 +137,7 @@ public class StationManager : MonoBehaviour
             yield return null;
         }
 
-        buttonsContainer.SetActive(true);
+        targetButton.GetComponent<Button>().interactable = true;
         target.transform.position = finalPos;
         Camera.main.GetComponent<DesktopCamera>().maxDistance = 130;
         Camera.main.GetComponent<MobileCamera>().maxDistance = 130;
@@ -155,10 +153,6 @@ public class StationManager : MonoBehaviour
     public void centerCamera()
     {
         isTargetFocus = false;
-
-        stationButton.SetActive(true);
-        targetButton.SetActive(false);
-
         StartCoroutine(centerCamera_Smooth());
     }
 
@@ -167,12 +161,13 @@ public class StationManager : MonoBehaviour
 
         //disablePin();
         float elapsed = 0.0f;
-        float duration = 2.8f;
+        float duration = 1.2f;
 
 
         //Changue smooth the Zoom of the camera
-        Camera.main.GetComponent<DesktopCamera>().minDistance = 75;
-        Camera.main.GetComponent<MobileCamera>().minDistance = 75;
+        Camera.main.GetComponent<DesktopCamera>().minDistance = 85;
+        Camera.main.GetComponent<MobileCamera>().minDistance = 85;
+        stationButton.GetComponent<Button>().interactable = false;
 
 
         Vector3 finalPos = Vector3.zero;
@@ -184,6 +179,7 @@ public class StationManager : MonoBehaviour
             yield return null;
         }
 
+        stationButton.GetComponent<Button>().interactable = true;
         target.transform.position = finalPos;
         Camera.main.GetComponent<DesktopCamera>().minDistance = 0.6f;
         Camera.main.GetComponent<MobileCamera>().minDistance = 0.6f;

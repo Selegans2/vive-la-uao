@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 public class DesktopCamera : MonoBehaviour
 {
-    private static readonly float[] BoundsX = new float[] { -10, 60 };
-    private static readonly float[] BoundsZ = new float[] { -20, 20 };
+    private static readonly float[] BoundsX = new float[] { -110, 160 };
+    private static readonly float[] BoundsZ = new float[] { -210, 210 };
 
     public Transform target;
     public Vector3 targetOffset;
