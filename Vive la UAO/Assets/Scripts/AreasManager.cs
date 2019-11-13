@@ -15,6 +15,7 @@ public class AreasManager : MonoBehaviour
     public Camera mainCamera;
     public Vector3 lookPosition;
     public Vector3 lookRotation;
+    public StationManager stationManager;
     [Space(5)]
 
     public List<Button> stationsButtons = new List<Button>();
@@ -144,7 +145,7 @@ public class AreasManager : MonoBehaviour
 
     IEnumerator changeStationSmooth(int area)
     {
-
+        stationManager.buttonsContainer.SetActive(false);
         mainCamera.GetComponent<MobileCamera>().enabled = false;
         mainCamera.GetComponent<DesktopCamera>().enabled = false;
         StartCoroutine(focusCamera());     
@@ -177,6 +178,7 @@ public class AreasManager : MonoBehaviour
                 mainCamera.GetComponent<DesktopCamera>().enabled = true;
         #endif
 
+        stationManager.buttonsContainer.SetActive(true);
         currentArea = area;
     }
 

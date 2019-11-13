@@ -60,6 +60,7 @@ public class GetPins : MonoBehaviour
 
     [Space(5)]
     public GameObject currentPin;
+    public string currentPlace;
 
 
     [Space(5)]
@@ -464,6 +465,10 @@ public class GetPins : MonoBehaviour
                     temp.name = st.name;
                     var stationTextName = temp.transform.GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetComponent<Text>();
                     stationTextName.text = st.name;
+                    
+                    //0 if campus, 1 if uaolabs1, 2 if uaolabs 2
+                    //st.place; 
+                    
                     //temp.transform.SetParent(Pinx3.transform, false);
                     //Disable the name interface
                     temp.transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
@@ -491,7 +496,10 @@ public class GetPins : MonoBehaviour
                             //StartCoroutine(AnimateSelectedStation(stationAnimated));
                             TapPinScript.enabled = true;
                             color.a = 1f;
+
                             currentPin = temp;
+                            currentPlace = st.place.ToString();
+
                             temp.transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
                             temp.transform.GetChild(0).GetChild(1).GetComponent<MeshRenderer>().material.color = color;
                             //Once it has found the station it will not search for it again
@@ -508,7 +516,10 @@ public class GetPins : MonoBehaviour
                             //StartCoroutine(AnimateSelectedStation(stationAnimated));
                             temp.transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
                             TapPinScript.enabled = true;
+
                             currentPin = temp;
+                            currentPlace = st.place.ToString();
+
                             color.a = 1f;
                             temp.transform.GetChild(0).GetChild(1).GetComponent<MeshRenderer>().material.color = color;
                         }
