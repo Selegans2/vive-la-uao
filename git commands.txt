@@ -37,6 +37,10 @@ git status --- see wich branch you are in
  
 git checkout miguelito --- Set to the miguelito branch to push changes
 
+git push origin --delete fixing-timer
+
+git branch -D fixing-timer
+
 
 git add . --- Add changes locally
 
@@ -45,9 +49,10 @@ git commit -m "my push" --- add a commit locally
 git push --- push the changes
 
 
-git push origin --delete fixing-timer
 
-git branch -D fixing-timer
+git checkout master
+
+git merge -m ".." fixing-timer
 
 
 

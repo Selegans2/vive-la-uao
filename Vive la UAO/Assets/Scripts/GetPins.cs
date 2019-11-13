@@ -85,6 +85,7 @@ public class GetPins : MonoBehaviour
     public bool DisableYincanaTimer = false;
     bool yincanaState;
     public static float yincanaTimer=0;
+    bool yincanaStart = false;
 
     float timer = 0;
     public GameObject ParticipantName;
@@ -200,9 +201,9 @@ public class GetPins : MonoBehaviour
         //testText.text = System.DateTime.UtcNow.ToString("dd,MM,yyyy");
     }
 
-
     void Update()
     {
+        Debug.Log("sequence: "+ sequence);
         //If yincana is enabled
         if (DisableYincanaTimer == false && PlayerPrefs.GetString("Yincana").Length != 0)
         {
@@ -460,7 +461,7 @@ public class GetPins : MonoBehaviour
                 {
                     var temp = Instantiate(StationPrefab, new Vector3(st.x, st.y, st.z), Quaternion.Euler(new Vector3(0, 0, 0)));
                     temp.name = st.name;
-                    var stationTextName = temp.transform.GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetComponent<Text>();
+                    var stationTextName = temp.transform.GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>();
                     stationTextName.text = st.name;
                     //temp.transform.SetParent(Pinx3.transform, false);
                     //Disable the name interface
@@ -501,6 +502,7 @@ public class GetPins : MonoBehaviour
                         //Get the first station to start
                         if (stationList[0].key == st.key)
                         {
+                            PlayerPrefs.SetInt("Total Score",0);
                             stationAnimated.Play("selectedStation");
                             //StartCoroutine(AnimateSelectedStation(stationAnimated));
                             temp.transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
@@ -543,7 +545,7 @@ public class GetPins : MonoBehaviour
                 {
                     var temp = Instantiate(AreaPrefab, new Vector3(ar.x - 32, ar.y, ar.z), Quaternion.Euler(new Vector3(0, 0, 0)));
                     temp.name = ar.name;
-                    var areaTextName = temp.transform.GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetComponent<Text>();
+                    var areaTextName = temp.transform.GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>();
                     areaTextName.text = ar.name;
                     temp.transform.parent = Pinx1.transform;
                 }
@@ -556,7 +558,7 @@ public class GetPins : MonoBehaviour
                 {
                     var temp = Instantiate(StationPrefab, new Vector3(st.x - 32, st.y, st.z), Quaternion.Euler(new Vector3(0, 0, 0)));
                     temp.name = st.name;
-                    var stationTextName = temp.transform.GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetComponent<Text>();
+                    var stationTextName = temp.transform.GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>();
                     stationTextName.text = st.name;
                     temp.transform.parent = Pinx2.transform.GetChild(0);
 
@@ -831,7 +833,6 @@ public class GetPins : MonoBehaviour
         YincanaConfirmationModal.SetActive(false);
     }
 
-    bool yincanaStart = false;
     //Save the group in Firebase and start the Yincana
     private IEnumerator SaveGroup()
     {

@@ -70,7 +70,6 @@ public class DesktopCamera : MonoBehaviour
     Vector3 direction;
     void LateUpdate()
     {
-        Debug.Log(hitColliderName);
         // If Control and Alt and Middle button? ZOOM!
         if (Input.GetMouseButton(2))
         {
