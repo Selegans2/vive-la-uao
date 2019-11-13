@@ -58,6 +58,8 @@ public class GetPins : MonoBehaviour
     public GameObject RefreshButton;
     public GameObject ChatMessage;
 
+    [Space(5)]
+    public GameObject currentPin;
 
 
     [Space(5)]
@@ -489,6 +491,7 @@ public class GetPins : MonoBehaviour
                             //StartCoroutine(AnimateSelectedStation(stationAnimated));
                             TapPinScript.enabled = true;
                             color.a = 1f;
+                            currentPin = temp;
                             temp.transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
                             temp.transform.GetChild(0).GetChild(1).GetComponent<MeshRenderer>().material.color = color;
                             //Once it has found the station it will not search for it again
@@ -505,6 +508,7 @@ public class GetPins : MonoBehaviour
                             //StartCoroutine(AnimateSelectedStation(stationAnimated));
                             temp.transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
                             TapPinScript.enabled = true;
+                            currentPin = temp;
                             color.a = 1f;
                             temp.transform.GetChild(0).GetChild(1).GetComponent<MeshRenderer>().material.color = color;
                         }
